@@ -1,6 +1,6 @@
 package jodatest
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.util.Holders
 import spock.lang.Unroll
 
 @Unroll
@@ -23,7 +23,7 @@ class CommandBindingSpec extends GebSpec {
 
 	def "a LocalDate property is bound using the #locale locale"() {
         given:
-        ConfigurationHolder.config.jodatime.format.html5 = false
+        Holders.config.jodatime.format.html5 = false
 
 		when:
 		go "/command/index?lang=$locale"
@@ -34,7 +34,7 @@ class CommandBindingSpec extends GebSpec {
 		$(".message").text() == expectedMessage
 
         cleanup:
-        ConfigurationHolder.config.jodatime.format.html5 = true
+        Holders.config.jodatime.format.html5 = true
 
 		where:
 		locale    | value      | expectedMessage
@@ -54,7 +54,7 @@ class CommandBindingSpec extends GebSpec {
 
 	def "a LocalDate property can be bound using a configured format"() {
 		given:
-		ConfigurationHolder.config.jodatime.format."org.joda.time.LocalDate" = "d/M/yyyy"
+		Holders.config.jodatime.format."org.joda.time.LocalDate" = "d/M/yyyy"
 
 		when:
 		go "/command/index"
@@ -65,6 +65,6 @@ class CommandBindingSpec extends GebSpec {
 		$(".message").text() == "You entered: 8 July 2010"
 
 		cleanup:
-		ConfigurationHolder.config.jodatime.format."org.joda.time.LocalDate" = null
+		Holders.config.jodatime.format."org.joda.time.LocalDate" = null
 	}
 }

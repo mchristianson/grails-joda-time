@@ -2,7 +2,7 @@ package jodatest
 
 import org.joda.time.LocalTime
 import spock.lang.Unroll
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.util.Holders
 
 @Unroll
 class LocalTimeScaffoldingSpec extends GebSpec {
@@ -47,7 +47,7 @@ class LocalTimeScaffoldingSpec extends GebSpec {
 
 	def "show formats LocalTime for #locale locale"() {
         given:
-        ConfigurationHolder.config.jodatime.format.html5 = false
+        Holders.config.jodatime.format.html5 = false
 
 		when:
 		go "/alarm/show/$alarm1.id?lang=$locale"
@@ -56,7 +56,7 @@ class LocalTimeScaffoldingSpec extends GebSpec {
 		$("li.fieldcontain", 1).find(".property-value").text() == expectedValue
 
         cleanup:
-        ConfigurationHolder.config.jodatime.format.html5 = true
+        Holders.config.jodatime.format.html5 = true
 
 		where:
 		locale    | expectedValue
